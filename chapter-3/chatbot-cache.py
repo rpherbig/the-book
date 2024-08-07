@@ -63,7 +63,7 @@ os.mkdir("exact_cache")
 set_llm_cache(SQLiteCache(database_path="exact_cache/sqlite.db"))
 
 perf_start = time.perf_counter()
-t = llm.invoke(example_query)
+llm.invoke(example_query)
 perf_end = time.perf_counter()
 print(f"First execution, with no caching: {perf_end - perf_start} seconds")
 
