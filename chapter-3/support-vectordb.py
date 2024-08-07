@@ -19,17 +19,11 @@ loader = DirectoryLoader(DATA_PATH, glob="*.md")
 documents = loader.load()
 print(f"Loaded {len(documents)} documents into memory.")
 
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=50,
-    chunk_overlap=25,
-    length_function=len,
-    add_start_index=True,
-)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=100, chunk_overlap=25)
 chunks = text_splitter.split_documents(documents)
 print(f"Split documents into {len(chunks)} chunks.")
-first_chunk = chunks[0]
-print(f"First chunk's content: {first_chunk.page_content}")
-print(f"First chunk's metadata: {first_chunk.metadata}")
+for chunk in chunks:
+    print(f"Chunk content: \"{chunk.page_content}\" from source \"{chunk.metadata["source"]}\"")
 
 embedding_function = OpenAIEmbeddings()
 db = Chroma.from_documents(chunks, embedding_function, persist_directory=CHROMA_PATH)
