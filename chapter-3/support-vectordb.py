@@ -31,5 +31,6 @@ first_chunk = chunks[0]
 print(f"First chunk's content: {first_chunk.page_content}")
 print(f"First chunk's metadata: {first_chunk.metadata}")
 
-db = Chroma.from_documents(chunks, OpenAIEmbeddings(), persist_directory=CHROMA_PATH)
+embedding_function = OpenAIEmbeddings()
+db = Chroma.from_documents(chunks, embedding_function, persist_directory=CHROMA_PATH)
 print("Saved chunks to the vector database")
