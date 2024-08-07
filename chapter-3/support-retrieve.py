@@ -17,6 +17,7 @@ Answer the question based only on the following context:
 
 Answer the question based on the above context: {question}
 """
+# Answer the question based on the above context and include the source for that answer: {question}
 
 embedding_function = OpenAIEmbeddings()
 db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
@@ -34,6 +35,7 @@ while True:
     
     print("Building context from similar text")
     context_text = "\n\n---\n\n".join([doc.page_content for doc, _ in results])
+    # context_text = "\n\n---\n\n".join([f"Answer: \"{doc.page_content}\"; Source: \"{doc.metadata["source"]}\"" for doc, _ in results])
     print("Building prompt from context")
     prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
     prompt = prompt_template.format(context=context_text, question=user_input)
