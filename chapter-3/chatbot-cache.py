@@ -1,4 +1,5 @@
 import time
+import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -6,6 +7,10 @@ load_dotenv()
 
 client = OpenAI()
 example_query = "How do I contact the Maintenance & Service department?"
+os.remove(".langchain.db")
+os.remove("similar_cache/faiss.index")
+os.remove("similar_cache/sqlite.db")
+os.rmdir("similar_cache")
 
 print("Example 1, a simple in-memory cache using a Python dictionary with an exact match")
 
@@ -64,19 +69,12 @@ print(f"Second execution, with a cache hit: {perf_end - perf_start} seconds")
 
 print("-----")
 print("Example 3, a Redis cache using the Langchain library with a similarity match (not exact!)")
-import hashlib
-from gptcache import Cache
 from gptcache.adapter.api import init_similar_cache
 from langchain_community.cache import GPTCache
 
 
-def get_hashed_name(name):
-    return hashlib.sha256(name.encode()).hexdigest()
-
-
-def init_gptcache(cache_obj: Cache, llm: str):
-    hashed_llm = get_hashed_name(llm)
-    init_similar_cache(cache_obj=cache_obj, data_dir=f"similar_cache_{hashed_llm}")
+def init_gptcache(cache_obj):
+    init_similar_cache(cache_obj=cache_obj, data_dir=f"similar_cache")
 
 set_llm_cache(GPTCache(init_gptcache))
 
