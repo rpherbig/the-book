@@ -68,10 +68,9 @@ perf_end = time.perf_counter()
 print(f"Second execution, with a cache hit: {perf_end - perf_start} seconds")
 
 print("-----")
-print("Example 3, a Redis cache using the Langchain library with a similarity match (not exact!)")
+print("Example 3, using the GPTCache library with a semantic similarity match (not exact!) on embeddings")
 from gptcache.adapter.api import init_similar_cache
 from langchain_community.cache import GPTCache
-
 
 def init_gptcache(cache_obj):
     init_similar_cache(cache_obj=cache_obj, data_dir=f"similar_cache")
