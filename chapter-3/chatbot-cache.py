@@ -5,13 +5,26 @@ from openai import OpenAI
 
 load_dotenv()
 
+def cleanup(dir, files):
+    for file in files:
+        try:
+            path = os.path.join(dir, file)
+            os.remove(path)
+        except FileNotFoundError:
+            pass # File not found, so it's already been cleaned up
+    try:
+        os.rmdir(dir)
+    except FileNotFoundError:
+        pass # Directory not found, so it's already been cleaned up
+
+print("Cleaning up temporary files")
+cleanup("exact_cache", ["sqlite.db"])
+cleanup("similar_cache", ["faiss.index", "sqlite.db"])
+
 client = OpenAI()
 example_query = "How do I contact the Maintenance & Service department?"
-os.remove(".langchain.db")
-os.remove("similar_cache/faiss.index")
-os.remove("similar_cache/sqlite.db")
-os.rmdir("similar_cache")
 
+print("-----")
 print("Example 1, a simple in-memory cache using a Python dictionary with an exact match")
 
 cache = {}
@@ -55,7 +68,8 @@ from langchain_community.cache import SQLiteCache
 print("Example 2, a more realistic SQLite DB cache using the Langchain library with an exact match")
 
 llm = OpenAI(model_name="gpt-3.5-turbo-instruct")
-set_llm_cache(SQLiteCache(database_path=".langchain.db"))
+os.mkdir("exact_cache")
+set_llm_cache(SQLiteCache(database_path="exact_cache/sqlite.db"))
 
 perf_start = time.perf_counter()
 t = llm.invoke(example_query)
@@ -78,7 +92,7 @@ def init_gptcache(cache_obj):
 set_llm_cache(GPTCache(init_gptcache))
 
 perf_start = time.perf_counter()
-t = llm.invoke(example_query)
+llm.invoke(example_query)
 perf_end = time.perf_counter()
 print(f"First execution, with no caching: {perf_end - perf_start} seconds")
 
