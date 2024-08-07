@@ -1,25 +1,16 @@
 import time
 import os
+import shutil
 from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
 
-def cleanup(dir, files):
-    for file in files:
-        try:
-            path = os.path.join(dir, file)
-            os.remove(path)
-        except FileNotFoundError:
-            pass # File not found, so it's already been cleaned up
-    try:
-        os.rmdir(dir)
-    except FileNotFoundError:
-        pass # Directory not found, so it's already been cleaned up
-
 print("Cleaning up temporary files")
-cleanup("exact_cache", ["sqlite.db"])
-cleanup("similar_cache", ["faiss.index", "sqlite.db"])
+if os.path.exists("exact_cache"):
+    shutil.rmtree("exact_cache")
+if os.path.exists("similar_cache"):
+    shutil.rmtree("similar_cache")
 
 client = OpenAI()
 example_query = "How do I contact the Maintenance & Service department?"
