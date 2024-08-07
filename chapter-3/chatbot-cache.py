@@ -7,7 +7,7 @@ load_dotenv()
 client = OpenAI()
 example_query = "How do I contact the Maintenance & Service department?"
 
-print('Example 1, a simple in-memory cache using a Python dictionary with an exact match')
+print("Example 1, a simple in-memory cache using a Python dictionary with an exact match")
 
 cache = {}
 
@@ -36,18 +36,18 @@ def main(user_query):
 perf_start = time.perf_counter()
 main(example_query)
 perf_end = time.perf_counter()
-print(f'First execution, with no caching: {perf_end - perf_start} seconds')
+print(f"First execution, with no caching: {perf_end - perf_start} seconds")
 
 perf_start = time.perf_counter()
 main(example_query)
 perf_end = time.perf_counter()
-print(f'Second execution, with a cache hit: {perf_end - perf_start} seconds')
+print(f"Second execution, with a cache hit: {perf_end - perf_start} seconds")
 
-print('-----')
+print("-----")
 from langchain.globals import set_llm_cache
 from langchain_openai import OpenAI
 from langchain_community.cache import SQLiteCache
-print('Example 2, a more realistic SQLite DB cache using the Langchain library with an exact match')
+print("Example 2, a more realistic SQLite DB cache using the Langchain library with an exact match")
 
 llm = OpenAI(model_name="gpt-3.5-turbo-instruct")
 set_llm_cache(SQLiteCache(database_path=".langchain.db"))
@@ -55,15 +55,15 @@ set_llm_cache(SQLiteCache(database_path=".langchain.db"))
 perf_start = time.perf_counter()
 t = llm.invoke(example_query)
 perf_end = time.perf_counter()
-print(f'First execution, with no caching: {perf_end - perf_start} seconds')
+print(f"First execution, with no caching: {perf_end - perf_start} seconds")
 
 perf_start = time.perf_counter()
 llm.invoke(example_query)
 perf_end = time.perf_counter()
-print(f'Second execution, with a cache hit: {perf_end - perf_start} seconds')
+print(f"Second execution, with a cache hit: {perf_end - perf_start} seconds")
 
-print('-----')
-print('Example 3, a Redis cache using the Langchain library with a similarity match (not exact!)')
+print("-----")
+print("Example 3, a Redis cache using the Langchain library with a similarity match (not exact!)")
 import hashlib
 from gptcache import Cache
 from gptcache.adapter.api import init_similar_cache
@@ -83,9 +83,9 @@ set_llm_cache(GPTCache(init_gptcache))
 perf_start = time.perf_counter()
 t = llm.invoke(example_query)
 perf_end = time.perf_counter()
-print(f'First execution, with no caching: {perf_end - perf_start} seconds')
+print(f"First execution, with no caching: {perf_end - perf_start} seconds")
 
 perf_start = time.perf_counter()
 llm.invoke(example_query.replace("contact", "reach"))
 perf_end = time.perf_counter()
-print(f'Second execution, with a cache hit: {perf_end - perf_start} seconds')
+print(f"Second execution, with a cache hit: {perf_end - perf_start} seconds")
