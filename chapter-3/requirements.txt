@@ -8,5 +8,5 @@ openai==1.40.1
 python-dotenv==1.0.1
 onnxruntime
 unstructured
-"unstructured[all-docs]"
 python-magic-bin
+transformers
