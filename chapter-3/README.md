@@ -6,9 +6,10 @@
 1. (Optional) Set up a virtual environment:
     * `python.exe -m venv .venv`
     * `.venv\Scripts\activate` (Windows) or `source .venv/bin/activate` (Linux/macOS)
-    * `python.exe -m pip install --upgrade pip`
+1. (Optional) Update pip: `python.exe -m pip install --upgrade pip`
 1. Install packages: `pip install -r requirements.txt`
     * If you are on Windows and encounter a problem installing `chromadb`, please see [this GitHub Issue](https://github.com/chroma-core/chroma/issues/189#issuecomment-1454418844) for a fix
+    * Because of a bug in pip, some packages must be installed manually: `pip install python-magic-bin "unstructured[md]"` (including the quotes)
 
 Note: these samples use the GPT-3.5 Turbo model because it is available for Free Trial accounts. Consider switching to a GPT-4 series model if you upgraded to a paid account.
 
