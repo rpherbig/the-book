@@ -23,7 +23,7 @@ embedding_function = OpenAIEmbeddings()
 db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
 
 while True:
-    user_input = input("Enter the user prompt (or type 'exit' to quit):")
+    user_input = input("Enter the user prompt (or type 'exit' to exit): ")
     if user_input.lower() == "exit":
         break
     

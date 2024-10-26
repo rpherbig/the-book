@@ -6,7 +6,7 @@ load_dotenv()
 client = OpenAI()
 
 while True:
-    user_input = input("Enter the user prompt (or type 'exit' to quit):")
+    user_input = input("Enter the user prompt (or type 'exit' to exit): ")
     if user_input.lower() == "exit":
         break
 
@@ -23,6 +23,7 @@ while True:
                 The hours of operation for the Customer Support department are 8am-5pm every weekday.
                 The hours of operation for the Dealer Service department are 7am-6pm every weekday and noon-5pm on Saturdays.
                 """
+                # Add the following prompt instruction when directed to by the text:
                 # If you do not know the answer, apologize and suggest the user contact Customer Support for additional help. Provide the phone number and hours of operation.
             },
             {"role": "user", "content": user_input},
