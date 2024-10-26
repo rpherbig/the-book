@@ -4,8 +4,8 @@
 1. (Optional) The free trial tier for OpenAI API access is severely rate limited; consider upgrading to a paid account
 1. Rename `.env.sample` to `.env` and update it with your API key
 1. (Optional) Set up a virtual environment:
-    * `python -m venv .venv`
-    * `.venv\Scripts\activate`
+    * `python.exe -m venv .venv`
+    * `.venv\Scripts\activate` (Windows) or `source .venv/bin/activate` (Linux/macOS)
     * `python.exe -m pip install --upgrade pip`
 1. Install packages: `pip install -r requirements.txt`
     * If you are on Windows and encounter a problem installing `chromadb`, please see [this GitHub Issue](https://github.com/chroma-core/chroma/issues/189#issuecomment-1454418844) for a fix
